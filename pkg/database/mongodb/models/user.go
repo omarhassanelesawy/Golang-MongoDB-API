@@ -1,6 +1,9 @@
 package models
 
-import "fmt"
+import (
+	"fmt"
+	"time"
+)
 
 type User struct {
 	Name     string `bson:"name"`
@@ -21,6 +24,16 @@ type SigninResponse struct {
 	Message      string `json:"message"`
 	AccessToken  string `json:"access_token"`
 	RefreshToken string `json:"refresh_token"`
+}
+
+type Organization struct {
+	Name        string `json:"name"`
+	Description string `json:"description"`
+}
+
+type Token struct {
+	Value      string    `json:"value" bson:"value"`
+	ExpiryTime time.Time `json:"expiry_time" bson:"expiry_time"`
 }
 
 func PrintUserInfo(u User) {

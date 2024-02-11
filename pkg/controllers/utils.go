@@ -1,8 +1,10 @@
 package controllers
 
 import (
+	"ideanesttask/pkg/database/mongodb/models"
 	"os"
 
+	"github.com/golang-jwt/jwt"
 	"gopkg.in/yaml.v2"
 )
 
@@ -29,4 +31,20 @@ func GetDatabaseConnectionString(configFile string) string {
 
 	// Return the database connection string
 	return connectionString
+}
+
+var jwtSecret = []byte("your_jwt_secret_key")
+
+// GenerateAccessToken generates an access token for the given user
+func GenerateAccessToken(user models.User) (string, error) {
+	// Create the token
+	token := jwt.New(jwt.SigningMethodHS256)
+
+	// Sign the token with the secret key
+	accessToken, err := token.SignedString(jwtSecret)
+	if err != nil {
+		return "", err
+	}
+
+	return accessToken, nil
 }
